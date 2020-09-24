@@ -43,10 +43,9 @@ for tmnt in tournamentEvent.findAll('option'):
     print(golfX['title'])
     table = soup.find('table', attrs = {'id': 'statsTable'}).tbody
     for row in table.findAll('tr'):
-        golfX = {}
-        golfX['rankTW'] = row.select('td')[0].text
-        golfX['rankLW'] = row.select('td')[1].text
-        golfX['name'] = row.select('td')[2].text
+        golfX['rankTW'] = row.select('td')[0].text.strip()
+        golfX['rankLW'] = row.select('td')[1].text.strip()
+        golfX['name'] = row.select('td')[2].text.strip()
         golfX['rounds'] = row.select('td')[3].text
         golfX['avg'] = row.select('td')[4].text
         golfX['totalStrokes'] = row.select('td')[5].text
@@ -55,18 +54,19 @@ for tmnt in tournamentEvent.findAll('option'):
         print(golfX['rankTW'])
         print(golfX['rankLW'])
         print(golfX['name'])
-        stats.append(golfX)
         print(golfX['rounds'])
         print(golfX['avg'])
         print(golfX['totalStrokes'])
         print(golfX['totalAdjustment'])
         print(golfX['totalRounds'])
-    stats.append(golfX)
-"""
+        print(golfX['eventURL'])
+        print(golfX['title'])
+        stats.append(golfX)
+        break
+
 filename = 'golf_stats.csv'
 with open(filename, 'w', newline='') as f:
     w = csv.DictWriter(f,['eventURL','title','rankTW','rankLW','name', 'rounds', 'avg', 'totalStrokes', 'totalAdjustment', 'totalRounds'])
     w.writeheader()
     for stat in stats:
         w.writerow(stat)
-"""
