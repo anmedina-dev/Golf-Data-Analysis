@@ -8,19 +8,10 @@ import functions
 
 #data: year, event, event scoring average, rankTW, rankLW, name, rounds, avg, totalStrokes, totalAdjustment, totalRounds
 stats = []
-"""
-try:
-    html = urlopen("https://www.pgatour.com/stats/stat.120.y2020.eoff.t013.html")
-except HTTPError as e:
-    #print HTTPError
-    print(e)
-else:
-"""
-#soup = BeautifulSoup(html.read(),"html5lib")
-soup = functions.eventURLChanger('t013')
+
+#t060 is the most recent tournament
+soup = functions.eventURLChanger('t060')
 tournamentSeason = soup.find('select', attrs = {'class': 'statistics-details-select--season'})
-#print(table)
-#print(tournament)
 
 
 #get data from every tournament from every year
@@ -51,22 +42,14 @@ for tmnt in tournamentEvent.findAll('option'):
         golfX['totalStrokes'] = row.select('td')[5].text
         golfX['totalAdjustment'] = row.select('td')[6].text
         golfX['totalRounds'] = row.select('td')[7].text
-        print(golfX['rankTW'])
-        print(golfX['rankLW'])
-        print(golfX['name'])
-        print(golfX['rounds'])
-        print(golfX['avg'])
-        print(golfX['totalStrokes'])
-        print(golfX['totalAdjustment'])
-        print(golfX['totalRounds'])
-        print(golfX['eventURL'])
-        print(golfX['title'])
-        stats.append(golfX)
-        break
+        #functions.printGolfX(golfX)
+        stats.append([golfX['eventURL'], golfX['title'], golfX['rankTW'], golfX['rankLW'], golfX['name'], golfX['rounds'], golfX['avg'], golfX['totalStrokes'], golfX['totalAdjustment'], golfX['totalRounds']])
 
-filename = 'golf_stats.csv'
-with open(filename, 'w', newline='') as f:
-    w = csv.DictWriter(f,['eventURL','title','rankTW','rankLW','name', 'rounds', 'avg', 'totalStrokes', 'totalAdjustment', 'totalRounds'])
-    w.writeheader()
-    for stat in stats:
-        w.writerow(stat)
+
+
+filename = 'golf_scoring_stats.csv'
+fields = ['eventURL','title','rankTW','rankLW','name', 'rounds', 'avg', 'totalStrokes', 'totalAdjustment', 'totalRounds']
+with open(filename, 'w') as f:
+    w = csv.writer(f)
+    w.writerow(fields)
+    w.writerows(stats)
