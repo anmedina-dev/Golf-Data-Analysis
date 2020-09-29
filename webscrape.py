@@ -54,8 +54,8 @@ print((end-start))
 
 filename = 'golf_scoring_stats.csv'
 #fields = ['eventURL','title','rankTW','rankLW','name', 'rounds', 'avg', 'totalStrokes', 'totalAdjustment', 'totalRounds']
-fields = ['year', 'title','rankTW','rankLW','name', 'rounds', 'avg', 'totalStrokes', 'totalAdjustment', 'totalRounds']
-with open(filename, 'w') as f:
+fields = ['Year', 'Title','Rank This Week','Rank Last Week','Name', 'Rounds', 'Average', 'Total Strokes', 'Total Adjustment', 'Total Rounds']
+with open(filename, 'w', newline = '') as f:
     w = csv.writer(f)
     w.writerow(fields)
     w.writerows(stats)
