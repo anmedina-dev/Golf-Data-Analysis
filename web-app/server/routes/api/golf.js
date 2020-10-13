@@ -20,4 +20,17 @@ router.get('/:year/:tournament', function(req, res) {
       .catch(err => res.status(404).json({msg: 'no scores found'}))
   })
 
+router.get('/getyears', function(req, res) {
+  Golf.find().distinct("Year")
+    .then(info => res.status(200).json(info))
+    .catch(err => res.status(404).json({msg: 'no years found'}))
+})
+
+router.get('/:year', function(req, res) {
+  let yearly = parseInt(req.params.year)
+  Golf.find({Year: yearly}).distinct("Title")
+    .then(info => res.status(200).json(info))
+    .catch(err => res.status(404).json({msg: 'no years found'}))
+})
+
 module.exports = router
