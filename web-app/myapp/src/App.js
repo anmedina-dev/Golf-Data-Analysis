@@ -7,11 +7,13 @@ import axios from 'axios'
 
 function App() {
 
-  const [scores, setScores] = useState([]);
   const [years, setYears] = useState([]);
   const [tourneys, setTourneysDropdown] = useState([]);
+  const [scores, setScores] = useState([]);
+  const [playerTourns, setPlayerTourns] = useState([]);
   const [sYear, setSelectYear]  = useState(0);
   const [sTourney, setSelectTourney]  = useState('');
+  const [sPlayer, setSelectPlayer] = useState('');
 
   useEffect(() => {
     getTournScores();
@@ -74,17 +76,35 @@ function App() {
     console.log(option.label)
 
     let temp = `/api/golf/${sYear.value}/${option.label}`
+    let res = await axios.get(temp)
+    let data = res.data
+    setScores(data)
+    temp = `/api/golf/player/${sYear.value}/${option.label}`
+    res = await axios.get(temp)
+    data = res.data
+    setPlayerTourns(data)
+  }
+
+  const newPlayerDropSetter = async(option) =>{   
+    setSelectPlayer(option)
+    console.log(sPlayer)
+    console.log(option.label)
+
+    let temp = `/api/golf/${option.label}`
     const res = await axios.get(temp)
     const data = res.data
-    setScores(data)
+    setPlayerTourns(data)
   }
+
+
 
   return (
     <div className="App">
       <div className="DataInput">
         <h1>TESTING</h1>
         <Dropdown classname = "myYearSelect" options={years} value={sYear} onChange={newYearSetter} placeholder="Select a year" />
-        <Dropdown options={tourneys} value={sTourney} onChange={newTourneySetter} placeholder="Select a tournament" />  
+        <Dropdown options={tourneys} value={sTourney} onChange={newTourneySetter} placeholder="Select a tournament" />
+        <Dropdown options={playerTourns} value={sPlayer} onChange={newPlayerDropSetter} placeholder="Select a player" />  
         {/*
         <form onSubmit={e => getTournScores(e)}>
             <label htmlFor="tournamentTitle">Tournament:</label>
@@ -97,7 +117,7 @@ function App() {
       </div>
       <div className="DataOutput">
         {scores.length > 0 && 
-        <div><h3>{scores[0].Title}</h3></div>
+        <div><h3>{scores[0].Year} {scores[0].Title}</h3></div>
         }
         {scores.map(scores => (
           <div key={scores._id}>{scores.Name}</div>
