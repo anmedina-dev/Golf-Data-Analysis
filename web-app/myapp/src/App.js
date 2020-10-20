@@ -11,7 +11,7 @@ function App() {
   //Working on right now
   const [distinctPlayerYears, setDistinctYears] = useState([]);
 
-  //Player 
+  //Player statistics in each tournament
   const [stats, setStats] = useState([]);
   //Dropdown menu options 
   const [years, setYearsDropdown] = useState([]);
@@ -24,10 +24,10 @@ function App() {
   const [sTourney, setSelectTourney]  = useState('');
   const [sPlayer, setSelectPlayer] = useState('');
 
-  ////////    useEffects 
+  ////////useEffects 
   useEffect(() => {
     getTournScores();
-  }, []);
+  }, [scores]);
 
   useEffect(() => {
     getThemYears();
@@ -51,15 +51,11 @@ function App() {
 
 
 
-
-
   //////////DROPDOWN MENU GETTERS//////////  
   //Get players in a specific tournament in a specific year
-  //Fix to update (not necessary)
-  const getTournScores = async(option=0) => {
-    if(option){
-
-      let temp = `/api/golf/everytourney/${sYear.value}/${option.label}`
+  const getTournScores = async() => {
+    if(sYear && sTourney){
+      let temp = `/api/golf/everytourney/${sYear.value}/${sTourney.value}`
       const res = await axios.get(temp)
       const data = res.data
       setScores(data)
@@ -101,9 +97,17 @@ function App() {
     setStats(data)
   }
 
+  //Get distinct years a player has played
   const getDistinctPlayedYears = () => {
     findYearsInPlayerCareer()
   }
+
+  //Get averages for every year for each stat of a player
+  const findAveragesPerYear = () => {
+
+  }
+
+
 
   //// OPTIONS MENU ONSUBMIT FUNCTIONS///////
   //When a year is selected
@@ -122,11 +126,12 @@ function App() {
   }
 
 
-  //////Misc. functions
 
+  //////Misc. functions
   //Find the years a player has played
   const findYearsInPlayerCareer = () =>{
     const dYears = _.keys(_.countBy(stats, function(stats) { return stats.Year; }));
+    setDistinctYears(dYears)
     //console.log(dYears)
   }
 
