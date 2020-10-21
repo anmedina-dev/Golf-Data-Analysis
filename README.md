@@ -4,9 +4,10 @@ Scraping PGA website of the statistics
 
 Statistics being scraped:
 1. Scoring Average
-2. One-Putt Average
-3. Off the tee
 
-After data is scraped, I processed and cleaned the data for analysis use. 
+Webscrape.py scrapes data from https://www.pgatour.com/stats/stat.120.html and exports data to  golf_scoring_stats.csv
 
-After data cleansing and processing, I analyze data. 
+GolfDA-Scoring.py cleans the golf_scoring_stats.csv data and exports it into clean_golf_scoring_stats.csv
+
+The web-app folder is the MERN Stack Web application to display the data. 
+ 
