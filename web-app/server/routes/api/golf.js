@@ -54,6 +54,22 @@ router.get('/player/:year/:tournament', function(req, res) {
     .catch(err => res.status(404).json({msg: 'no scores found'}))
 })
 
+//Get years a player has played
+router.get('/distinctyearsplayed/:player', function(req, res) {
+  let playerly = decodeURI(req.params.player)
+  Golf.find({"Name":playerly}).distinct("Year")
+  .then(info => res.status(200).json(info))
+  .catch(err => res.status(404).json({msg: 'no years found'}))
+})
+
+//Get a player's Rank This Weeks in a specific year
+router.get('/ranktw/:year/:player', function(req, res) {
+  let yearly = parseInt(req.params.year)
+  let playerly = decodeURI(req.params.player)
+  Golf.find({Year:yearly, "Name":playerly}).distinct("Rank This Week")
+  .then(info => res.status(200).json(info))
+  .catch(err => res.status(404).json({msg: 'no ranktws found'}))
+})
 
 
 module.exports = router
