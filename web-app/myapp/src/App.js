@@ -26,8 +26,6 @@ function App() {
   const [sTourney, setSelectTourney]  = useState('');
   const [sPlayer, setSelectPlayer] = useState('');
 
-  //Random Arrays 
-  let oreverseDPList = []
 
   ////////useEffects 
   useEffect(() => {
@@ -59,6 +57,10 @@ function App() {
   useEffect(() => {
     getArrayTester();
   }, [rankTWAvg])
+
+  useEffect(() => {
+    getRankTWAvg();
+  }, [])
 
 
   //////////DROPDOWN MENU GETTERS//////////  
@@ -114,11 +116,10 @@ function App() {
   //Length of this array should be same as player's distinct years played
   const getRankTWAvg = async() => {
     let avgList = []
-    let reverseDPList = distinctPlayerYears.reverse()
-    console.log(reverseDPList)
+    console.log(distinctPlayerYearsReversed)
     var i, x;
-    for(i = 0; i < distinctPlayerYears.length; i++) {
-      const res = await axios.get(`/api/golf/ranktw/${reverseDPList[i]}/${sPlayer.value}`)
+    for(i = 0; i < distinctPlayerYearsReversed.length; i++) {
+      const res = await axios.get(`/api/golf/ranktw/${distinctPlayerYearsReversed[i]}/${sPlayer.value}`)
       const data = res.data
       let sum = 0
       for(x = 0; x < data.length; x++) {
@@ -128,14 +129,6 @@ function App() {
     }
     setRankTWAvg(avgList)
   }
-
-  //Get averages for every year for each stat of a player
-  const findAveragesPerYear = () => {
-
-  }
-
-
-
 
   //// OPTIONS MENU ONSUBMIT FUNCTIONS///////
   //When a year is selected
