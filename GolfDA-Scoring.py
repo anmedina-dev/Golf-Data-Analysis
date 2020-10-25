@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[42]:
+# In[1]:
 
 
 #Import Necessary Modules
@@ -9,114 +9,101 @@ import pandas as pd
 import numpy as np
 
 
-# In[43]:
+# In[2]:
 
 
 df = pd.read_csv('golf_scoring_stats.csv', encoding = "ISO-8859-1", low_memory = False)
 df.head()
 
 
-# In[44]:
+# In[3]:
 
 
 df.info()
 
 
-# In[45]:
+# In[ ]:
 
 
-df = df.dropna()
+df = df.drop(['Rank Last Week'], axis=1)
 
 
-# In[46]:
+# In[4]:
+
+
+df = df.dropna(subset=['Rank This Week', 'Rounds', 'Average', 'Total Strokes', 'Total Adjustment'])
+
+
+# In[5]:
 
 
 df.info()
 
 
-# In[47]:
+# In[6]:
 
 
 df.tail()
 
 
-# In[48]:
 
-
-df['Rank Last Week'] = df['Rank Last Week'].replace(regex=['T'], value='')
-
-
-# In[49]:
+# In[8]:
 
 
 df['Rank This Week'] = df['Rank This Week'].replace(regex=['T'], value='')
 
 
-# In[50]:
+# In[9]:
 
 
 df.head(15)
 
 
-# In[51]:
+# In[10]:
 
 
 df.dtypes
 
 
-# In[52]:
+# In[11]:
 
 
 df['Rank This Week'] = df['Rank This Week'].astype('float')
 df['Rank This Week'] = df['Rank This Week'].astype('Int64')
 
 
-# In[53]:
-
-
-df['Rank Last Week'] = df['Rank Last Week'].astype('float')
-df['Rank Last Week'] = df['Rank Last Week'].astype('Int64')
-
-
-# In[54]:
+# In[13]:
 
 
 df['Total Strokes'] = df['Total Strokes'].replace(regex=[','], value='')
 
 
-# In[55]:
+# In[14]:
 
 
 df['Total Strokes'] = df['Total Strokes'].astype(int)
 df['Total Strokes'] = df['Total Strokes'].astype('Int64')
 
 
-# In[56]:
+# In[15]:
 
 
 df['Total Adjustment'] = df['Total Adjustment'].replace(regex=[' '], value='')
 
 
-# In[57]:
+# In[16]:
 
 
 df['Total Adjustment'] = df['Total Adjustment'].astype('float64')
 
 
-# In[58]:
+# In[17]:
 
 
 df.dtypes
 
 
-# In[59]:
-
-
-df.to_csv('clean_golf_scoring_data.csv')
-
-
 # In[ ]:
 
 
-
-
+df.to_csv('clean_golf_scoring_data.csv')

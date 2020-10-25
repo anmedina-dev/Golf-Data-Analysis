@@ -62,7 +62,7 @@
 	margin-top: 12px;
   }
   .DataOutput {
-	width: 500px;
+	width: 35%;
 	margin: 0 auto;
 	border: 1px solid rgb(82, 82, 82);
 	padding: 20px;
@@ -130,4 +130,13 @@
 
   .RankTW-LineChart{
 	  background-color: white;
+	  display: flex;
   }
+  .ScoreRank-LineChart{
+	background-color: white;
+	display: flex;
+  }
+
+   .DataOutput div {
+	   margin-bottom: 15px;
+   }

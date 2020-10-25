@@ -15,6 +15,9 @@ function App() {
   const [distinctPlayerYears, setDistinctYears] = useState([]);
   const [distinctPlayerYearsReversed, setDistinctYearsReversed] = useState([]);
 
+  //A players played in tournaments in a year
+  const [playerPlayedTourneysInYear, setPlayerPlayedTourneysInYear] = useState([]);
+
   //Dropdown menu options 
   const [years, setYearsDropdown] = useState([]);
   const [tourneys, setTourneysDropdown] = useState([]); 
@@ -62,6 +65,10 @@ function App() {
   useEffect(() => {
     getRankTWAvg();
   }, [distinctPlayerYearsReversed])
+
+  useEffect(() => {
+    getPlayerPlayedTourneysInYear();
+  }, [sPlayer])
 
 
   //////////DROPDOWN MENU GETTERS//////////  
@@ -131,6 +138,13 @@ function App() {
     setRankTWAvg(avgList)
   }
 
+  //Get the tournament a specific player has played in a specfic year
+  const getPlayerPlayedTourneysInYear = async() => {
+    const res = await axios.get(`/api/golf/playedtournsyear/${sYear}/${sPlayer}`)
+    const data = res.data
+    setPlayerPlayedTourneysInYear(data)
+  }
+
   //// OPTIONS MENU ONSUBMIT FUNCTIONS///////
   //When a year is selected
   function newYearSetter(option){   
@@ -157,6 +171,9 @@ function App() {
   }
 */
 
+  //////// Charts
+
+  //Average Rank Per Year Line Chart
   let playerAvgRankLineChart = {
     labels: distinctPlayerYearsReversed,
     datasets: [
@@ -184,6 +201,9 @@ function App() {
     ]
   }
 
+  //Scores in everytournament in a year and the tournament they played in
+
+
 
   return (
     <div className="App">
@@ -207,6 +227,9 @@ function App() {
 
 
         <div className = "RankTW-LineChart">
+          <Line data={playerAvgRankLineChart}/>
+        </div>
+        <div className = "ScoreRank-LineChart">
           <Line data={playerAvgRankLineChart}/>
         </div>
 

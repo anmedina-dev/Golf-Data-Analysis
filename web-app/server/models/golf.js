@@ -17,10 +17,6 @@ const GolfSchema = new Schema({
     type: Number,
     required: true,
   },
-  ranklw: {
-    type: Number,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
