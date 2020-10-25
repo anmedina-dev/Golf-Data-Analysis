@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const app = express()
-const PORT = 5000
+const PORT = process.env.PORT || 5000
 // imports the API from the routes/api folder
 const scores = require('./routes/api/golf')
 

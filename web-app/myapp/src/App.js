@@ -34,33 +34,34 @@ function App() {
 
   useEffect(() => {
     getThemYears();
-  }, [years]);
+  }, []);
 
   useEffect(() =>{
     getTournDropdown();
-  }, [tourneys]);
+  }, [sYear]);
 
   useEffect(() =>{
     getPlayerDropdown();
-  }, [playerTourns])
+  }, [sTourney])
 
   useEffect(() => {
     getPlayerStats();
-  }, [stats])
+  }, [sPlayer])
 
 
   useEffect(() => {
     getDistinctPlayedYears();
-  }, [distinctPlayerYears])
+  }, [sPlayer])
 
-
+/*
   useEffect(() => {
     getArrayTester();
   }, [rankTWAvg])
+*/
 
   useEffect(() => {
     getRankTWAvg();
-  }, [])
+  }, [distinctPlayerYearsReversed])
 
 
   //////////DROPDOWN MENU GETTERS//////////  
@@ -116,7 +117,7 @@ function App() {
   //Length of this array should be same as player's distinct years played
   const getRankTWAvg = async() => {
     let avgList = []
-    console.log(distinctPlayerYearsReversed)
+    //console.log(distinctPlayerYearsReversed)
     var i, x;
     for(i = 0; i < distinctPlayerYearsReversed.length; i++) {
       const res = await axios.get(`/api/golf/ranktw/${distinctPlayerYearsReversed[i]}/${sPlayer.value}`)
@@ -150,16 +151,17 @@ function App() {
 
   //////Misc. functions
 
+  /*
   const getArrayTester = async() => {
     console.log(rankTWAvg)
   }
+*/
 
-
-  let lineData = {
+  let playerAvgRankLineChart = {
     labels: distinctPlayerYearsReversed,
     datasets: [
       {
-        label: `${sPlayer.value}'s Average This Week Rank`,
+        label: `${sPlayer.value}'s Average Rank Every Year`,
         data: rankTWAvg,
         fill: false,
         lineTension: 0.1,
@@ -190,7 +192,6 @@ function App() {
         <Dropdown classname = "myYearSelect" options={years} value={sYear} onChange={newYearSetter} placeholder="Select a year" />
         <Dropdown options={tourneys} value={sTourney} onChange={newTourneySetter} placeholder="Select a tournament" />
         <Dropdown options={playerTourns} value={sPlayer} onChange={newPlayerDropSetter} placeholder="Select a player" />
-        <button onClick={getRankTWAvg}>Find Average Player</button>
 
       </div>
       <div className="DataOutput">
@@ -206,7 +207,7 @@ function App() {
 
 
         <div className = "RankTW-LineChart">
-          <Line data={lineData}/>
+          <Line data={playerAvgRankLineChart}/>
         </div>
 
       </div>
