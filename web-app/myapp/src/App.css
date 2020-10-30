@@ -62,12 +62,13 @@
 	margin-top: 12px;
   }
   .DataOutput {
-	width: 35%;
+	width: 90%;
 	margin: 0 auto;
-	border: 1px solid rgb(82, 82, 82);
 	padding: 20px;
 	border-radius: 2px;
 	margin-top: 20px;
+	display: flex;
+	flex-wrap: wrap;
   }
   .DataOutput__card {
 	border: 1px solid rgb(24, 24, 24);
@@ -138,5 +139,6 @@
   }
 
    .DataOutput div {
-	   margin-bottom: 15px;
+	   width: 45%;
+	   margin: 0px 15px 10px;
    }

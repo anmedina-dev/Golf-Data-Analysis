@@ -1,6 +1,7 @@
+//Router
 const express = require('express')
 const router = express.Router()
-const Golf = require('../../models/Golf')
+const Golf = require('../../models/golf.js')
 
 router.get('/test', function (req, res) {res.json({msg: 'backend works'})})
 
@@ -85,6 +86,15 @@ router.get('/playerscoresinyear/:year/:player', function(req, res) {
   let yearly = parseInt(req.params.year)
   let playerly = decodeURI(req.params.player)
   Golf.find({Year:yearly, "Name":playerly}, {"Average": 1, _id: 0})
+  .then(info => res.status(200).json(info))
+  .catch(err => res.status(404).json({msg: 'no scores found'}))
+})
+
+//A player's ranks in a specific year
+router.get('/playerranksinyear/:year/:player', function(req, res) {
+  let yearly = parseInt(req.params.year)
+  let playerly = decodeURI(req.params.player)
+  Golf.find({Year:yearly, "Name":playerly}, {"Rank This Week": 1, _id: 0})
   .then(info => res.status(200).json(info))
   .catch(err => res.status(404).json({msg: 'no scores found'}))
 })
