@@ -290,32 +290,29 @@ function App() {
 
   return (
     <div className="App">
-      <div className="DataInput">
+      <div className="DataInput">        
         <h1>PGA Tour Data Visualization</h1>
         <Dropdown classname = "myYearSelect" options={years} value={sYear} onChange={newYearSetter} placeholder="Select a year" />
         <Dropdown options={tourneys} value={sTourney} onChange={newTourneySetter} placeholder="Select a tournament" />
         <Dropdown options={playerTourns} value={sPlayer} onChange={newPlayerDropSetter} placeholder="Select a player" />
 
       </div>
-      <div className="DataOutput">
-        {/*
-        {scores.length > 0 && 
-        <div><h3>{scores[0].Year} {scores[0].Title}</h3></div>
-        }
-        {scores.map(scores => (
-          <div key={scores._id}>{scores.Name}</div>
-        ))}
+      <div className="DataOutput container-fluid">
+        <div className="row">
 
-        */}
+          <div className = "col-xs-12 col-md-6 col-lg-6">
+            <div className="BackgroundWhite">
+              <Line  data={playerAvgRankLineChart}/>
+            </div>
+          </div>
 
+          <div className = "col-xs-12 col-md-6 col-lg-6">
+            <div className="BackgroundWhite">
+              <Line data={rankScoreLine} options={scoreRankOptions}/> 
+            </div>
+          </div>
 
-        <div className = "RankTW-LineChart">
-          <Line data={playerAvgRankLineChart}/>
         </div>
-        <div className = "ScoreRank-LineChart">
-          <Line data={rankScoreLine} options={scoreRankOptions}/>
-        </div>
-
       </div>
     </div>
   );

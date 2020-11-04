@@ -67,8 +67,6 @@
 	padding: 20px;
 	border-radius: 2px;
 	margin-top: 20px;
-	display: flex;
-	flex-wrap: wrap;
   }
   .DataOutput__card {
 	border: 1px solid rgb(24, 24, 24);
@@ -129,16 +127,11 @@
 	margin: 5px;
   }
 
-  .RankTW-LineChart{
-	  background-color: white;
-	  display: flex;
-  }
-  .ScoreRank-LineChart{
-	background-color: white;
-	display: flex;
-  }
-
    .DataOutput div {
-	   width: 45%;
-	   margin: 0px 15px 10px;
+	   padding: 0px 15px 10px;
+   }
+
+   .BackgroundWhite{
+	   background-color: white;
+
    }
