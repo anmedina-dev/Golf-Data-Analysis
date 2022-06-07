@@ -5,6 +5,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css'
 import axios from 'axios'
 import {Line} from 'react-chartjs-2'
+import PropagateLoader from 'react-spinners/PropagateLoader';
 
 function App() {
 
@@ -29,12 +30,15 @@ function App() {
   const [sYear, setSelectYear]  = useState(0);
   const [sTourney, setSelectTourney]  = useState('');
   const [sPlayer, setSelectPlayer] = useState('');
+	
+	//Loading Bar
+	const [isLoading, setIsLoading] = useState(false);
 
 
   ////////useEffects 
   useEffect(() => {
     getTournScores();
-  }, [scores]);
+  }, []);
 
   useEffect(() => {
     getThemYears();
@@ -42,6 +46,9 @@ function App() {
 
   useEffect(() =>{
     getTournDropdown();
+		if(sTourney && sPlayer){
+			getPlayerPlayedTourneysInYear();
+		};
   }, [sYear]);
 
   useEffect(() =>{
@@ -123,6 +130,7 @@ function App() {
     const data = res.data
     //console.log(data)
     setStats(data)
+    setIsLoading(false);
   }
 
   //Get distinct years a player has played
@@ -195,7 +203,8 @@ function App() {
   }
 
   //When a player is selected
-  const newPlayerDropSetter = async(option) =>{   
+  const newPlayerDropSetter = async(option) =>{
+    if(sPlayer){setIsLoading(true)}   
     setSelectPlayer(option)
   }
 
@@ -286,7 +295,7 @@ function App() {
       ],
     },
   }
-  
+
 
   return (
     <div className="App">
@@ -296,6 +305,9 @@ function App() {
         <Dropdown options={tourneys} value={sTourney} onChange={newTourneySetter} placeholder="Select a tournament" />
         <Dropdown options={playerTourns} value={sPlayer} onChange={newPlayerDropSetter} placeholder="Select a player" />
 
+      </div>
+      <div className='loader'>
+        <PropagateLoader color={"#FFFFFF"} loading={isLoading} size={30}/>
       </div>
       <div className="DataOutput container-fluid">
         <div className="row">

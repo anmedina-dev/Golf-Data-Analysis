@@ -50,13 +50,21 @@
   .DataInput {
 	width: 500px;
 	margin: 0 auto;
-	border: 1px solid rgb(82, 82, 82);
+	border: 3px solid rgb(255, 255, 255);
+	border-radius: 25px;
 	padding: 20px;
-	border-radius: 2px;
   }
-  .DataInput h2 {
-	text-decoration: underline;
-	margin-bottom: 20px;
+  .loader {
+	  display: grid;
+	  justify-content: center;
+	  align-content: center;
+	margin: 0 auto;
+	padding: 25px 0;
+  }
+  .DataInput h1 {
+	  font-size: 50px;
+	  font-weight: 1000;
+	  margin-bottom: 20px;
   }
   .DataInput button {
 	margin-top: 12px;
